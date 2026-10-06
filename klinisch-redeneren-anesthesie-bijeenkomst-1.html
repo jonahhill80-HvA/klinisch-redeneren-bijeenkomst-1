@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klinisch Redeneren Anesthesie — Bijeenkomst 1</title>
+<meta name="description" content="Interactieve les Klinisch Redeneren Anesthesie, bijeenkomst 1.">
+<style>
+:root{
+  --bg:#f4f7f8; --surface:#ffffff; --surface2:#eef4f5; --ink:#13242b; --muted:#5b6a70;
+  --line:#d9e3e6; --brand:#006b73; --brand2:#0f8790; --accent:#d9f0f1;
+  --ok:#1f6b47; --okbg:#eaf6ef; --warn:#8a5a00; --warnbg:#fff6dd; --bad:#9b2c2c; --badbg:#fff0f0;
+  --shadow:0 10px 28px rgba(16,46,54,.08); --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:var(--brand)}
+.skip{position:absolute;left:-9999px;top:8px;background:#fff;padding:8px 12px;border-radius:8px;z-index:99}
+.skip:focus{left:8px}
+header.hero{background:linear-gradient(135deg,#063f46,#0b7179);color:white;padding:42px 20px 34px}
+.hero-inner{max-width:1180px;margin:auto;display:grid;grid-template-columns:1.4fr .8fr;gap:28px;align-items:end}
+.kicker{display:inline-flex;gap:8px;align-items:center;font-size:.83rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.13);padding:7px 10px;border-radius:999px}
+h1{font-size:clamp(2rem,5vw,4.2rem);line-height:1.02;margin:16px 0 12px;letter-spacing:-.04em}
+.hero p{max-width:780px;color:#d9eff1;font-size:1.05rem}
+.meta{display:grid;gap:10px;background:rgba(255,255,255,.1);padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,.16)}
+.meta strong{display:block;font-size:.8rem;color:#bfe2e5;text-transform:uppercase;letter-spacing:.08em}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(244,247,248,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{max-width:1180px;margin:auto;padding:10px 18px;display:flex;gap:8px;overflow:auto}
+.nav button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:8px 12px;white-space:nowrap}
+.nav button.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+main{max-width:1180px;margin:28px auto 70px;padding:0 18px}
+.section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(20px,3vw,34px);margin:20px 0;box-shadow:var(--shadow)}
+.section-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:20px}
+.eyebrow{font-size:.8rem;text-transform:uppercase;letter-spacing:.09em;font-weight:800;color:var(--brand)}
+h2{font-size:clamp(1.45rem,3vw,2.3rem);line-height:1.15;margin:5px 0 8px;letter-spacing:-.025em}
+h3{margin:0 0 8px;font-size:1.1rem}
+.lead{color:var(--muted);max-width:800px}
+.grid{display:grid;gap:16px}
+.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{border:1px solid var(--line);border-radius:14px;padding:18px;background:#fff}
+.card.soft{background:var(--surface2)}
+.card p:last-child{margin-bottom:0}
+.goal{display:grid;grid-template-columns:36px 1fr;gap:12px}
+.goal .num{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--brand);font-weight:800}
+.callout{border-left:4px solid var(--brand2);background:#f0f9fa;padding:16px 18px;border-radius:10px}
+.pill{display:inline-block;border-radius:999px;background:var(--accent);color:var(--brand);font-size:.82rem;font-weight:800;padding:5px 9px}
+.causal{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:stretch;margin-top:18px}
+.causal .node{background:#f8fbfb;border:1px solid var(--line);border-radius:12px;padding:14px;min-height:96px}
+.causal .arrow{display:none}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.step{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+.step button{width:100%;text-align:left;border:0;background:#fff;padding:16px;display:flex;gap:12px;align-items:flex-start}
+.step button:hover,.step button:focus{background:#f7fbfb}
+.step .n{flex:0 0 34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--brand);color:#fff;font-weight:800}
+.step .detail{display:none;padding:0 16px 16px 62px;color:var(--muted)}
+.step.open .detail{display:block}
+.interaction{border:1px solid #bad8dc;background:#f6fbfc;border-radius:16px;padding:20px;margin-top:18px}
+.interaction h3{font-size:1.15rem}
+.option-list{display:grid;gap:10px;margin-top:14px}
+.option{border:1px solid var(--line);background:white;border-radius:12px;padding:12px 14px;text-align:left}
+.option:hover,.option:focus{border-color:var(--brand2)}
+.option.selected{outline:3px solid #b7e0e3;border-color:var(--brand)}
+.feedback{display:none;margin-top:12px;padding:13px 14px;border-radius:10px}
+.feedback.show{display:block}
+.feedback.ok{background:var(--okbg);color:var(--ok);border:1px solid #c7e7d5}
+.feedback.hint{background:var(--warnbg);color:#6b4700;border:1px solid #f2dfa5}
+.feedback.bad{background:var(--badbg);color:var(--bad);border:1px solid #edcccc}
+.btn{border:0;border-radius:11px;background:var(--brand);color:white;padding:10px 14px;font-weight:800}
+.btn.secondary{background:white;color:var(--brand);border:1px solid var(--brand)}
+.btn.ghost{background:transparent;color:var(--brand);border:1px solid var(--line)}
+.btn:focus,.option:focus,.nav button:focus,.step button:focus{outline:3px solid #93cbd0;outline-offset:2px}
+.case-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px}
+.patient{background:#102f35;color:white;border-radius:16px;padding:20px}
+.patient .data{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.patient .datum{background:rgba(255,255,255,.08);padding:10px;border-radius:10px}
+.patient .datum small{display:block;color:#bcd5d8}
+.timeline{display:grid;gap:12px}
+.timeline .row{display:grid;grid-template-columns:54px 1fr;gap:12px}
+.timeline .time{font-weight:800;color:var(--brand)}
+.case-step{border:1px solid var(--line);border-radius:14px;padding:16px}
+.case-step.locked{opacity:.55}
+.case-step .answer{display:none;margin-top:12px;background:#f8fbfb;border-top:1px solid var(--line);padding-top:12px}
+.case-step.revealed .answer{display:block}
+.tag{font-size:.78rem;font-weight:800;border:1px solid var(--line);border-radius:999px;padding:3px 8px;background:#fff}
+.check-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.asa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.asa-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff}
+.asa-card strong{font-size:1.2rem;color:var(--brand)}
+.progress{height:8px;border-radius:999px;background:#e1eaec;overflow:hidden;margin-top:12px}
+.progress>span{display:block;height:100%;background:var(--brand);width:0%;transition:.25s}
+.quiz-summary{display:none;margin-top:18px;padding:18px;background:var(--surface2);border-radius:14px}
+footer{max-width:1180px;margin:0 auto 40px;padding:0 18px;color:var(--muted);font-size:.9rem}
+@media(max-width:850px){
+  .hero-inner,.case-grid,.grid.two,.grid.three{grid-template-columns:1fr}
+  .steps,.asa-grid{grid-template-columns:1fr 1fr}
+  .causal{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .steps,.asa-grid{grid-template-columns:1fr}
+  .patient .data{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Direct naar inhoud</a>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="kicker">AM · Klinisch redeneren anesthesie</span>
+      <h1>Bijeenkomst 1<br>Van observatie naar beleid</h1>
+      <p>Een interactieve introductie in klinisch redeneren op de OK: waarom het nodig is, hoe de zes stappen samenhangen en hoe je ze gebruikt in een perioperatieve casus.</p>
+    </div>
+    <div class="meta" aria-label="Lesinformatie">
+      <div><strong>Niveau</strong>Jaar 3 · Minor AM</div>
+      <div><strong>Context</strong>ASA I–II · laagcomplexe anesthesiologische zorg</div>
+      <div><strong>Werkvorm</strong>Uitleg · voorspellen · redeneren · zelfcheck</div>
+    </div>
+  </div>
+</header>
+
+<div class="topbar" aria-label="Lesnavigatie">
+  <nav class="nav" id="nav"></nav>
+</div>
+
+<main id="main"></main>
+
+<footer>
+  <p>Interactieve les voor lokaal gebruik en GitHub Pages. Eén zelfstandig HTML-bestand; geen externe libraries of buildstap.</p>
+</footer>
+
+<script>
+const LES = {
+  metadata:{
+    title:"Klinisch Redeneren Anesthesie — Bijeenkomst 1",
+    subtitle:"Van observatie naar beleid"
+  },
+  doelen:[
+    "De noodzaak van klinisch redeneren binnen de anesthesie uitleggen.",
+    "De zes stappen van het klinisch redeneren binnen de anesthesie beschrijven.",
+    "De ASA-classificatie herkennen als redeneerhulp bij de preoperatieve oriëntatie."
+  ],
+  zesStappen:[
+    {nr:1,titel:"Oriëntatie op de kritische beroepssituatie / het klinische beeld",kort:"Preoperatieve screening: wat weet je al van deze patiënt en deze ingreep?",detail:"Verzamel relevante medische, functionele en contextuele gegevens. Denk aan anamnese, lichamelijke toestand, medicatie, nuchterheid, voorgeschiedenis en de geplande ingreep."},
+    {nr:2,titel:"Preoperatieve klinische probleemstellingen",kort:"Welke risico’s of problemen zijn voor deze patiënt relevant?",detail:"Orden bevindingen in klinische aandachtspunten en orgaansystemen. Formuleer wat bedreigd kan worden en waarom."},
+    {nr:3,titel:"Analyse stap 1 en 2",kort:"Welke anesthesietechniek, monitoring en aanvullende informatie passen hierbij?",detail:"Koppel patiëntkenmerken en risico’s aan anesthesiekeuze, aanvullend onderzoek en noodzakelijke monitoring."},
+    {nr:4,titel:"Klinisch beleid en verloop — peroperatief",kort:"Wat gebeurt er tijdens de ingreep en hoe stuur je bij?",detail:"Volg het feitelijke verloop, prioriteer problemen, kies interventies, monitor het effect en stem af met het anesthesieteam."},
+    {nr:5,titel:"Klinisch beleid en verloop — postoperatief",kort:"Welke risico’s en kritieke momenten zijn er na de ingreep?",detail:"Beoordeel herstel, complicaties, overdraagbaarheid en benodigde postoperatieve observatie en interventies."},
+    {nr:6,titel:"Nabeschouwing",kort:"Wat leer je van het verloop en wat betekent dit voor patiëntveiligheid en kwaliteit?",detail:"Evalueer gebeurtenissen, klinische keuzes, patiëntveiligheid, kwaliteit van zorg, ethische aspecten en het eigen handelen."}
+  ],
+  asa:[
+    {code:"ASA I",text:"Gezonde patiënt."},
+    {code:"ASA II",text:"Milde systemische aandoening zonder duidelijke functionele beperking."},
+    {code:"ASA III",text:"Ernstige systemische aandoening met beperking van dagelijkse activiteit."},
+    {code:"ASA IV",text:"Ernstige systemische aandoening die een constante bedreiging voor het leven vormt."},
+    {code:"ASA V",text:"Moribunde patiënt die zonder ingreep naar verwachting niet overleeft."},
+    {code:"ASA VI",text:"Hersendode patiënt voor orgaandonatie."}
+  ],
+  quiz:[
+    {
+      q:"Wat is in deze cursus de kern van klinisch redeneren bij anesthesie?",
+      options:[
+        "Zo snel mogelijk een medische diagnose stellen.",
+        "Observeren, gegevens ordenen en beoordelen wat anesthesie en chirurgie met vitale functies doen.",
+        "Alleen afwijkende waarden herkennen in de recovery.",
+        "Een vast protocol uitvoeren zonder de situatie opnieuw te beoordelen."
+      ],
+      correct:1,
+      explain:"Klinisch redeneren is een continu proces van gegevensverzameling en analyse. In de anesthesiologische context koppel je fysiologie, patiëntkenmerken, anesthesie, chirurgie, monitoring en interventies aan elkaar."
+    },
+    {
+      q:"Welke stap volgt direct op het formuleren van preoperatieve klinische probleemstellingen?",
+      options:[
+        "Nabeschouwing",
+        "Postoperatief beleid",
+        "Analyse van stap 1 en 2: anesthesietechniek en monitoring",
+        "Peroperatief verloop"
+      ],
+      correct:2,
+      explain:"Stap 3 analyseert de oriëntatie en probleemstellingen en vertaalt deze naar onder meer anesthesietechniek, aanvullend onderzoek en monitoring."
+    },
+    {
+      q:"Wat maakt een zorgthema bruikbaar bij klinisch redeneren?",
+      options:[
+        "Het ordent observaties rond een klinisch relevant probleem of orgaansysteem.",
+        "Het vervangt alle vitale parameters.",
+        "Het bepaalt automatisch de anesthesietechniek.",
+        "Het is alleen bedoeld voor postoperatieve verslaglegging."
+      ],
+      correct:0,
+      explain:"Een zorgthema helpt gegevens te ordenen en klinische problemen te lokaliseren. Het ondersteunt de stap van losse observaties naar een beredeneerd probleem."
+    },
+    {
+      q:"Waarom is ASA-classificatie vooral relevant in stap 1?",
+      options:[
+        "Omdat ASA het postoperatieve pijnbeleid voorschrijft.",
+        "Omdat ASA de fysieke status van de patiënt samenvat als onderdeel van de preoperatieve oriëntatie.",
+        "Omdat ASA de exacte anesthesiedosering bepaalt.",
+        "Omdat ASA alleen bij spoedpatiënten wordt gebruikt."
+      ],
+      correct:1,
+      explain:"ASA is een redeneerhulp voor de preoperatieve fysieke status. De classificatie ondersteunt oriëntatie, maar vervangt geen volledige klinische beoordeling."
+    }
+  ]
+};
+
+const sections = [
+  {id:"start",label:"Start"},
+  {id:"waarom",label:"Waarom redeneren?"},
+  {id:"stappen",label:"6 stappen"},
+  {id:"zorgthema",label:"Zorgthema"},
+  {id:"asa",label:"ASA"},
+  {id:"casus",label:"Casus Willemsen"},
+  {id:"zelfcheck",label:"Zelfcheck"},
+  {id:"afronding",label:"Afronding"}
+];
+
+const main = document.querySelector("#main");
+const nav = document.querySelector("#nav");
+
+nav.innerHTML = sections.map((s,i)=>`<button type="button" data-target="${s.id}" class="${i===0?'active':''}">${s.label}</button>`).join("");
+nav.addEventListener("click", e=>{
+  const b=e.target.closest("button[data-target]");
+  if(!b) return;
+  document.getElementById(b.dataset.target)?.scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+function goalCards(){
+  return LES.doelen.map((g,i)=>`
+    <div class="card goal">
+      <div class="num">${i+1}</div>
+      <div><strong>Na deze les kun je</strong><div>${g}</div></div>
+    </div>`).join("");
+}
+
+function stepsHTML(){
+  return LES.zesStappen.map(s=>`
+    <article class="step" data-step="${s.nr}">
+      <button type="button" aria-expanded="false">
+        <span class="n">${s.nr}</span>
+        <span><strong>${s.titel}</strong><br><span class="lead">${s.kort}</span></span>
+      </button>
+      <div class="detail">${s.detail}</div>
+    </article>`).join("");
+}
+
+main.innerHTML = `
+<section class="section" id="start">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">Start</div>
+      <h2>Wat moet je aan het einde kunnen?</h2>
+      <p class="lead">Deze bijeenkomst legt de basis voor de rest van de leerlijn. Het gaat niet alleen om weten welke stappen er zijn, maar vooral om begrijpen hoe je van observatie naar een beargumenteerde klinische keuze komt.</p>
+    </div>
+    <span class="pill">Bijeenkomst 1</span>
+  </div>
+  <div class="grid three">${goalCards()}</div>
+  <div class="callout" style="margin-top:18px">
+    <strong>Toetsgericht leren:</strong> in de cursus wordt klinische informatie uiteindelijk gebruikt om risico’s voor orgaansystemen te interpreteren en passende anesthesiologische interventies te formuleren. Deze eerste les bouwt het redeneerraamwerk daarvoor.
+  </div>
+</section>
+
+<section class="section" id="waarom">
+  <div class="eyebrow">Concept</div>
+  <h2>Waarom klinisch redeneren op de OK?</h2>
+  <p class="lead">De anesthesiemedewerker observeert, ordent en beoordeelt voortdurend vitale functies. Het doel is niet alleen registreren wat je ziet, maar begrijpen <em>waardoor</em> iets verandert, <em>wat het betekent</em> en <em>welke actie</em> logisch volgt.</p>
+  <div class="causal" aria-label="Redeneerketen">
+    <div class="node"><strong>1. Waarnemen</strong><br><span class="lead">Wat zie, meet of hoor je?</span></div>
+    <div class="node"><strong>2. Lokaliseren</strong><br><span class="lead">Welk klinisch probleem of orgaansysteem?</span></div>
+    <div class="node"><strong>3. Verklaren</strong><br><span class="lead">Welk fysiologisch mechanisme past erbij?</span></div>
+    <div class="node"><strong>4. Handelen</strong><br><span class="lead">Welke monitoring of interventie is passend?</span></div>
+    <div class="node"><strong>5. Evalueren</strong><br><span class="lead">Heeft de actie het gewenste effect?</span></div>
+  </div>
+
+  <div class="interaction" data-predict="why">
+    <h3>Voorspelvraag</h3>
+    <p>Een patiënt ademt spontaan na een korte algehele anesthesie, maar de gemeten CO₂ is verhoogd. Wat is de beste <em>eerste</em> redeneerstap?</p>
+    <div class="option-list">
+      <button class="option" data-value="a">Direct transporteren: de patiënt ademt immers spontaan.</button>
+      <button class="option" data-value="b">De observatie plaatsen in het klinische beeld en nagaan welk mechanisme de ventilatie kan beïnvloeden.</button>
+      <button class="option" data-value="c">Alleen de CO₂ opnieuw meten en verder niets veranderen.</button>
+    </div>
+    <div class="feedback" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="section" id="stappen">
+  <div class="eyebrow">Raamwerk</div>
+  <h2>De zes stappen van klinisch redeneren</h2>
+  <p class="lead">Klik op iedere stap. Let op de overgang van patiëntoriëntatie naar risicoanalyse, beleid, evaluatie en nabeschouwing.</p>
+  <div class="steps">${stepsHTML()}</div>
+
+  <div class="interaction" id="orderExercise">
+    <h3>Zet de redeneerlijn in de juiste volgorde</h3>
+    <p>Gebruik de knoppen om de kaartjes te verplaatsen. De inhoud is bewust verkort: je ordent de logica, niet de exacte formulering.</p>
+    <div id="orderList"></div>
+    <div class="check-row">
+      <button class="btn" id="checkOrder">Controleer volgorde</button>
+      <button class="btn secondary" id="resetOrder">Opnieuw</button>
+    </div>
+    <div class="feedback" id="orderFeedback" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="section" id="zorgthema">
+  <div class="eyebrow">Van losse data naar probleem</div>
+  <h2>Wat doet een zorgthema?</h2>
+  <div class="grid two">
+    <div class="card soft">
+      <h3>Losse observaties</h3>
+      <p>Een meting op zichzelf vertelt nog niet wat het klinische probleem is. Je moet gegevens bundelen, vergelijken met de context en zoeken naar samenhang.</p>
+    </div>
+    <div class="card">
+      <h3>Klinisch aandachtspunt</h3>
+      <p>Een zorgthema helpt je observaties te ordenen rond functies en orgaansystemen. In latere lessen wordt dat verder uitgewerkt voor onder andere respiratie, circulatie, zuurstofbalans en vocht-/elektrolytenbalans.</p>
+    </div>
+  </div>
+  <div class="interaction" data-predict="theme">
+    <h3>Mini-oefening</h3>
+    <p>Welke formulering past het best bij klinisch redeneren?</p>
+    <div class="option-list">
+      <button class="option" data-value="a">“CO₂ 56 mmHg.”</button>
+      <button class="option" data-value="b">“De ventilatie is mogelijk onvoldoende; ik koppel de verhoogde CO₂ aan anesthesieresten, ademprikkel, ademarbeid en het klinische beeld.”</button>
+      <button class="option" data-value="c">“De operatie is klaar, dus het respiratoire risico is voorbij.”</button>
+    </div>
+    <div class="feedback" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="section" id="asa">
+  <div class="eyebrow">Redeneerhulp</div>
+  <h2>ASA-classificatie: fysieke status in één oogopslag</h2>
+  <p class="lead">De ASA-classificatie beschrijft de algemene fysieke status van de patiënt. Gebruik ASA als samenvatting binnen de preoperatieve oriëntatie — niet als vervanging van de volledige beoordeling.</p>
+  <div class="asa-grid">
+    ${LES.asa.map(a=>`<div class="asa-card"><strong>${a.code}</strong><p>${a.text}</p></div>`).join("")}
+  </div>
+  <div class="interaction" data-predict="asa">
+    <h3>Classificeer</h3>
+    <p>Een patiënt heeft goed gereguleerde hypertensie, gebruikt medicatie en functioneert verder goed. Welke ASA-klasse past het best?</p>
+    <div class="option-list">
+      <button class="option" data-value="I">ASA I</button>
+      <button class="option" data-value="II">ASA II</button>
+      <button class="option" data-value="III">ASA III</button>
+      <button class="option" data-value="IV">ASA IV</button>
+    </div>
+    <div class="feedback" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="section" id="casus">
+  <div class="eyebrow">Klinische toepassing</div>
+  <h2>Casus mevrouw Willemsen</h2>
+  <p class="lead">Werk de situatie uit volgens de zes stappen. Je krijgt per stap een beslismoment. Gebruik de informatie die op dat moment beschikbaar is.</p>
+
+  <div class="case-grid">
+    <aside class="patient">
+      <h3>Situatie</h3>
+      <p>Mevrouw Willemsen, 45 jaar, gezond, is geopereerd aan hemorroïden onder algehele anesthesie. De ingreep verliep zonder bijzonderheden en duurde ongeveer 10 minuten.</p>
+      <div class="data">
+        <div class="datum"><small>Inductie</small>Propofol 120 mg + sufentanil 30 µg i.v.</div>
+        <div class="datum"><small>Onderhoud</small>Sevoflurane, O₂/lucht</div>
+        <div class="datum"><small>Pijnstilling</small>Paracetamol, meloxicam, piritramide 15 mg s.c.</div>
+        <div class="datum"><small>Luchtweg</small>LMA maat 4</div>
+        <div class="datum"><small>Ademhaling</small>Spontaan</div>
+        <div class="datum"><small>EtCO₂ / CO₂</small>56 mmHg (≈7,3 kPa)</div>
+        <div class="datum"><small>Sevofluraan</small>Expiratoir 0,8</div>
+        <div class="datum"><small>Context</small>Volgende patiënt wacht; chirurg vraagt waarom zij nog op OK is</div>
+      </div>
+    </aside>
+
+    <div class="timeline" id="caseTimeline">
+      <div class="case-step" data-case="1">
+        <div class="row"><div class="time">Stap 1</div><div><strong>Oriëntatie</strong><p>Welke gegevens verdienen nu extra aandacht?</p></div></div>
+        <div class="option-list">
+          <button class="option" data-value="a">Alleen de duur van de operatie.</button>
+          <button class="option" data-value="b">Bewustzijn/herstel, ventilatie, CO₂, resterend anesthesie-effect, luchtweg en transportgereedheid.</button>
+          <button class="option" data-value="c">Alleen het feit dat de chirurg wil doorwisselen.</button>
+        </div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="case-step locked" data-case="2">
+        <div class="row"><div class="time">Stap 2</div><div><strong>Probleemstelling</strong><p>Wat is op dit moment de meest relevante klinische probleemrichting?</p></div></div>
+        <div class="option-list">
+          <button class="option" data-value="a">Mogelijk vertraagd herstel met respiratoire dreiging door anesthesie-/opioïd-effect.</button>
+          <button class="option" data-value="b">Een primair orthopedisch probleem.</button>
+          <button class="option" data-value="c">Geen probleem: spontane ademhaling betekent per definitie veilige ventilatie.</button>
+        </div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="case-step locked" data-case="3">
+        <div class="row"><div class="time">Stap 3</div><div><strong>Analyse</strong><p>Welke redenering is het sterkst?</p></div></div>
+        <div class="option-list">
+          <button class="option" data-value="a">Verhoogde CO₂ + anesthesieresten kunnen wijzen op hypoventilatie; aanvullende beoordeling van ademhaling, bewustzijn en herstel is nodig vóór transport.</button>
+          <button class="option" data-value="b">Omdat de ingreep kort was, kan er geen relevant anesthesie-effect meer zijn.</button>
+          <button class="option" data-value="c">De wachttijd van de volgende patiënt bepaalt of transport veilig is.</button>
+        </div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="case-step locked" data-case="4">
+        <div class="row"><div class="time">Stap 4–5</div><div><strong>Beleid en overdraagbaarheid</strong><p>Welke prioriteit past het best?</p></div></div>
+        <div class="option-list">
+          <button class="option" data-value="a">Eerst klinisch herstel en veilige ventilatie beoordelen/ondersteunen; daarna pas transport en overdracht.</button>
+          <button class="option" data-value="b">LMA verwijderen om tijd te winnen, ongeacht het bewustzijnsniveau.</button>
+          <button class="option" data-value="c">Direct naar de recovery, want daar hoort postoperatieve zorg plaats te vinden.</button>
+        </div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="case-step locked" data-case="5">
+        <div class="row"><div class="time">Stap 6</div><div><strong>Nabeschouwing</strong><p>Welke reflectievraag is het meest relevant?</p></div></div>
+        <div class="option-list">
+          <button class="option" data-value="a">Hoe voorkom ik dat productiedruk mijn beoordeling van transportveiligheid beïnvloedt?</button>
+          <button class="option" data-value="b">Hoe kan ik de volgende operatie sneller laten starten, ongeacht patiëntfactoren?</button>
+          <button class="option" data-value="c">Hoe kan ik minder klinische gegevens vastleggen?</button>
+        </div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="zelfcheck">
+  <div class="eyebrow">Zelfcheck</div>
+  <h2>Kun je het raamwerk zelfstandig toepassen?</h2>
+  <p class="lead">Beantwoord vier vragen. Bij een fout antwoord krijg je eerst een redeneringshint en kun je opnieuw kiezen.</p>
+  <div class="progress" aria-label="Voortgang zelfcheck"><span id="quizProgress"></span></div>
+  <div id="quiz"></div>
+  <div class="quiz-summary" id="quizSummary"></div>
+</section>
+
+<section class="section" id="afronding">
+  <div class="eyebrow">Afronding</div>
+  <h2>Neem dit mee naar de volgende bijeenkomst</h2>
+  <div class="grid two">
+    <div class="card">
+      <h3>Kern van vandaag</h3>
+      <p>Klinisch redeneren is een cyclisch proces: observeren, ordenen, verklaren, handelen en evalueren. De zes anesthesiologische stappen geven daarvoor structuur van preoperatieve screening tot nabeschouwing.</p>
+    </div>
+    <div class="card soft">
+      <h3>Vooruitblik: redeneerhulpen</h3>
+      <p>De volgende bijeenkomst verdiept hulpmiddelen zoals SBAR, (S)AMPLE, ASA, orgaansystemen, ABCDE en andere redeneerhulpen. Bereid je voor op de vraag: <em>welke redeneerhulp gebruik je wanneer — en waarom?</em></p>
+    </div>
+  </div>
+</section>
+`;
+
+// Accordion steps
+document.querySelectorAll(".step button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const step=btn.closest(".step");
+    const open=step.classList.toggle("open");
+    btn.setAttribute("aria-expanded",String(open));
+  });
+});
+
+// Prediction interactions
+const predictionAnswers = {
+  why:{correct:"b", ok:"Juist. Eerst interpreteer je de observatie in het totale klinische beeld. Spontaan ademen zegt nog niet dat de ventilatie adequaat is.", hint:"Kijk niet alleen naar één observatie. Vraag jezelf af: welk fysiologisch mechanisme kan deze waarde verklaren en wat betekent dat voor veiligheid?"},
+  theme:{correct:"b", ok:"Juist. Dit is klinisch redeneren: je koppelt een meetwaarde aan mogelijke mechanismen en aan de betekenis voor de patiënt.", hint:"Een losse meetwaarde is nog geen klinische redenering. Kies de optie die observatie én mechanisme met elkaar verbindt."},
+  asa:{correct:"II", ok:"Juist. Goed gereguleerde hypertensie past bij een milde systemische aandoening en daarmee bij ASA II.", hint:"De patiënt is niet volledig gezond, maar heeft ook geen ernstige functionele beperking. Welke klasse zit daartussen?"}
+};
+document.querySelectorAll("[data-predict]").forEach(box=>{
+  const cfg=predictionAnswers[box.dataset.predict];
+  const fb=box.querySelector(".feedback");
+  box.querySelectorAll(".option").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      box.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));
+      btn.classList.add("selected");
+      if(btn.dataset.value===cfg.correct){
+        fb.className="feedback show ok"; fb.textContent=cfg.ok;
+      }else{
+        fb.className="feedback show hint"; fb.textContent=cfg.hint+" Probeer opnieuw.";
+      }
+    });
+  });
+});
+
+// Order exercise
+const orderCorrect = [1,2,3,4,5,6];
+let order = [3,1,5,2,6,4];
+const orderLabels = {
+  1:"Oriëntatie op klinisch beeld",
+  2:"Preoperatieve probleemstellingen",
+  3:"Analyse: techniek & monitoring",
+  4:"Peroperatief beleid en verloop",
+  5:"Postoperatief beleid en verloop",
+  6:"Nabeschouwing"
+};
+function renderOrder(){
+  document.querySelector("#orderList").innerHTML = order.map((n,i)=>`
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0">
+      <span><span class="tag">${i+1}</span> ${orderLabels[n]}</span>
+      <span>
+        <button class="btn ghost move" data-i="${i}" data-d="-1" ${i===0?'disabled':''} aria-label="Omhoog">↑</button>
+        <button class="btn ghost move" data-i="${i}" data-d="1" ${i===order.length-1?'disabled':''} aria-label="Omlaag">↓</button>
+      </span>
+    </div>`).join("");
+}
+renderOrder();
+document.querySelector("#orderList").addEventListener("click",e=>{
+  const b=e.target.closest(".move"); if(!b) return;
+  const i=Number(b.dataset.i), j=i+Number(b.dataset.d);
+  [order[i],order[j]]=[order[j],order[i]]; renderOrder();
+});
+document.querySelector("#checkOrder").addEventListener("click",()=>{
+  const fb=document.querySelector("#orderFeedback");
+  const ok=order.every((v,i)=>v===orderCorrect[i]);
+  if(ok){fb.className="feedback show ok";fb.textContent="Klopt. De redeneerlijn loopt van oriëntatie en probleemstelling via analyse naar per- en postoperatief beleid en tenslotte nabeschouwing."}
+  else{fb.className="feedback show hint";fb.textContent="Nog niet helemaal. Zoek eerst de preoperatieve stappen, daarna het feitelijke perioperatieve verloop en sluit af met evaluatie/nabeschouwing."}
+});
+document.querySelector("#resetOrder").addEventListener("click",()=>{order=[3,1,5,2,6,4];renderOrder();const fb=document.querySelector("#orderFeedback");fb.className="feedback";fb.textContent=""});
+
+// Case progression
+const caseCorrect = {"1":"b","2":"a","3":"a","4":"a","5":"a"};
+const caseHints = {
+  "1":"Oriënteer breed: welke gegevens zeggen iets over herstel, ventilatie, anesthesieresten en veilige overdracht?",
+  "2":"Formuleer het probleem als een klinisch risico, niet als een planning- of productievraag.",
+  "3":"Koppel de verhoogde CO₂ en anesthesieresten aan een mogelijk ventilatieprobleem.",
+  "4":"Patiëntveiligheid gaat vóór doorstroming: eerst beoordelen/stabiliseren, daarna transport.",
+  "5":"Nabeschouwing gaat ook over patiëntveiligheid, kwaliteit en de invloed van context op klinische keuzes."
+};
+document.querySelectorAll(".case-step").forEach(step=>{
+  step.querySelectorAll(".option").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      if(step.classList.contains("locked")) return;
+      const nr=step.dataset.case, fb=step.querySelector(".feedback");
+      step.querySelectorAll(".option").forEach(x=>x.classList.remove("selected")); btn.classList.add("selected");
+      if(btn.dataset.value===caseCorrect[nr]){
+        fb.className="feedback show ok"; fb.textContent="Goed beredeneerd. "+(nr==="5"?"Je hebt de casus afgerond.":"Ga door naar de volgende stap.");
+        const next=step.nextElementSibling; if(next?.classList.contains("case-step")) next.classList.remove("locked");
+      }else{
+        fb.className="feedback show hint"; fb.textContent=caseHints[nr]+" Probeer opnieuw.";
+      }
+    });
+  });
+});
+
+// Quiz with retry
+let quizIndex=0, quizScore=0, quizAttempts=0;
+const quizWrap=document.querySelector("#quiz");
+function renderQuiz(){
+  if(quizIndex>=LES.quiz.length){
+    document.querySelector("#quizSummary").style.display="block";
+    document.querySelector("#quizSummary").innerHTML=`<h3>Klaar</h3><p>Je hebt ${quizScore} van de ${LES.quiz.length} vragen uiteindelijk correct beantwoord zonder eerst fout te kiezen.</p><p>Belangrijker dan de score: kun je bij iedere vraag uitleggen <em>waarom</em> het antwoord past in de redeneerlijn?</p>`;
+    document.querySelector("#quizProgress").style.width="100%";
+    quizWrap.innerHTML="";
+    return;
+  }
+  const q=LES.quiz[quizIndex];
+  document.querySelector("#quizProgress").style.width=`${(quizIndex/LES.quiz.length)*100}%`;
+  quizAttempts=0;
+  quizWrap.innerHTML=`
+    <div class="interaction">
+      <span class="pill">Vraag ${quizIndex+1} van ${LES.quiz.length}</span>
+      <h3 style="margin-top:12px">${q.q}</h3>
+      <div class="option-list">
+        ${q.options.map((o,i)=>`<button class="option" data-i="${i}">${o}</button>`).join("")}
+      </div>
+      <div class="feedback" aria-live="polite"></div>
+    </div>`;
+  const box=quizWrap.querySelector(".interaction"), fb=box.querySelector(".feedback");
+  box.querySelectorAll(".option").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const i=Number(btn.dataset.i);
+      box.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));btn.classList.add("selected");
+      if(i===q.correct){
+        if(quizAttempts===0) quizScore++;
+        fb.className="feedback show ok";fb.innerHTML=`<strong>Juist.</strong> ${q.explain}<div class="check-row"><button class="btn" id="nextQuiz">${quizIndex===LES.quiz.length-1?"Bekijk resultaat":"Volgende vraag"}</button></div>`;
+        box.querySelectorAll(".option").forEach(x=>x.disabled=true);
+        fb.querySelector("#nextQuiz").addEventListener("click",()=>{quizIndex++;renderQuiz()});
+      }else{
+        quizAttempts++;
+        fb.className="feedback show hint";fb.textContent="Niet helemaal. Kijk naar de functie van het redeneermodel: van gegevens naar betekenis en vervolgens naar een onderbouwde keuze. Probeer opnieuw.";
+      }
+    });
+  });
+}
+renderQuiz();
+
+// Active nav section
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.target===entry.target.id));
+    }
+  });
+},{rootMargin:"-35% 0px -55% 0px",threshold:0});
+document.querySelectorAll("main > section").forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>
